@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myconfigmapexpress
+data:
+  ME_CONFIG_MONGODB_SERVER: mongo-service
+

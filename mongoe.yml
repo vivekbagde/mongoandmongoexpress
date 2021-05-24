@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongoexpress
+  labels:
+    app: mongoexpress
+spec:
+  selector:
+    matchLabels:
+      app: mongoexpress
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mongoexpress
+    spec:
+      containers:
+      - name: mongoexpress
+        image: mongo-express
+        ports:
+        - containerPort: 8081
+        envFrom:
+        - secretRef:
+            name: mysecretexpress
+        - configMapRef:
+            name: myconfigmapexpress
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongoe
+spec:
+  selector:
+    app: mongoexpress
+  ports:
+  - targetPort: 8081
+    port: 8081
+  type: LoadBalancer

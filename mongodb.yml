@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod2
+  labels:
+    app: mongo
+spec:
+  containers:
+  - name: mongo
+    image: mongo
+    ports:
+    - containerPort: 27017
+    envFrom:
+    - secretRef:
+        name: mysecret
+    - configMapRef:
+        name: myconfigmap
+    volumeMounts:
+    - name: data-volume
+      mountPath: /tmp/data
+  volumes:
+  - name: data-volume
+    hostPath:
+      type: DirectoryOrCreate
+      path: /tmp/data1
+  nodeSelector:
+    app: worker2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+spec:
+  ports:
+  - port: 27017
+  type: ClusterIP
+  selector:
+    app: mongo
