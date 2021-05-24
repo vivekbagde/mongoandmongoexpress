@@ -7,5 +7,5 @@ echo -n 'password' | base64
 
 Try to apply these codes in kubernetes.
 
-At last try to access website using http://<loadbalancer-url>:8081
+At last try to access website using http://loadbalancer-url:8081
 
